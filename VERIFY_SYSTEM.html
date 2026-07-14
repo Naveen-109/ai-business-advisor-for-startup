@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            text-align: center;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .test-section h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #5568d3;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 3px;
+            margin-left: 10px;
+            font-size: 12px;
+        }
+        .status.ok {
+            background: #4caf50;
+            color: white;
+        }
+        .status.fail {
+            background: #f44336;
+            color: white;
+        }
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 System Verification Dashboard</h1>
+        <p style="text-align: center; color: #666;">
+            Test all features to ensure everything is working correctly
+        </p>
+
+        <!-- Test 1: Health Check -->
+        <div class="test-section">
+            <h3>1. Health Check <span id="health-status" class="status"></span></h3>
+            <button onclick="testHealth()">Run Health Check</button>
+            <div id="health-result" class="result"></div>
+        </div>
+
+        <!-- Test 2: Main Page -->
+        <div class="test-section">
+            <h3>2. Main Page Load <span id="page-status" class="status"></span></h3>
+            <button onclick="testMainPage()">Test Main Page</button>
+            <button onclick="window.open('http://localhost:5000', '_blank')">Open Main Page</button>
+            <div id="page-result" class="result"></div>
+        </div>
+
+        <!-- Test 3: Karnataka Integration -->
+        <div class="test-section">
+            <h3>3. Karnataka Business Ideas <span id="karnataka-status" class="status"></span></h3>
+            <button onclick="testKarnataka('Mysuru')">Test Mysuru</button>
+            <button onclick="testKarnataka('Bengaluru')">Test Bengaluru</button>
+            <button onclick="testKarnataka('Kodagu')">Test Kodagu</button>
+            <button onclick="testKarnataka('Mandya')">Test Mandya</button>
+            <div id="karnataka-result" class="result"></div>
+        </div>
+
+        <!-- Test 4: Profit Prediction -->
+        <div class="test-section">
+            <h3>4. Profit Prediction <span id="predict-status" class="status"></span></h3>
+            <button onclick="testPrediction()">Test Prediction</button>
+            <div id="predict-result" class="result"></div>
+        </div>
+
+        <!-- Test 5: Static Files -->
+        <div class="test-section">
+            <h3>5. Static Files <span id="static-status" class="status"></span></h3>
+            <button onclick="testStaticFiles()">Test CSS & JS</button>
+            <div id="static-result" class="result"></div>
+        </div>
+
+        <!-- Overall Status -->
+        <div class="test-section" style="background: #f0f0f0; border: 3px solid #667eea;">
+            <h3>📊 Overall System Status</h3>
+            <div id="overall-status" style="font-size: 18px; text-align: center; padding: 20px;">
+                Click "Run All Tests" to check system status
+            </div>
+            <div style="text-align: center;">
+                <button onclick="runAllTests()" style="font-size: 16px; padding: 15px 30px;">
+                    🚀 Run All Tests
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000';
+
+        async function testHealth() {
+            const resultDiv = document.getElementById('health-result');
+            const statusSpan = document.getElementById('health-status');
+            resultDiv.innerHTML = '<p class="loading">Testing...</p>';
+            
+            try {
+                const response = await fetch(`${API_URL}/health`);
+                const data = await response.json();
+                
+                if (data.status === 'healthy') {
+                    statusSpan.className = 'status ok';
+                    statusSpan.textContent = '✓ PASS';
+                    resultDiv.innerHTML = `<p class="success">✓ Server is healthy!</p>
+<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                } else {
+                    throw new Error('Server not healthy');
+                }
+            } catch (error) {
+                statusSpan.className = 'status fail';
+                statusSpan.textContent = '✗ FAIL';
+                resultDiv.innerHTML = `<p class="error">✗ Error: ${error.message}</p>`;
+            }
+        }
+
+        async function testMainPage() {
+            const resultDiv = document.getElementById('page-result');
+            const statusSpan = document.getElementById('page-status');
+            resultDiv.innerHTML = '<p class="loading">Testing...</p>';
+            
+            try {
+                const response = await fetch(`${API_URL}/`);
+                const html = await response.text();
+                
+                if (html.includes('Karnataka Business Ideas') && html.includes('AI Business Advisor')) {
+                    statusSpan.className = 'status ok';
+                    statusSpan.textContent = '✓ PASS';
+                    resultDiv.innerHTML = `<p class="success">✓ Main page loads correctly!</p>
+<p>✓ Karnataka section found in HTML</p>
+<p>✓ Page size: ${(html.length / 1024).toFixed(2)} KB</p>`;
+                } else {
+                    throw new Error('Karnataka section not found in page');
+                }
+            } catch (error) {
+                statusSpan.className = 'status fail';
+                statusSpan.textContent = '✗ FAIL';
+                resultDiv.innerHTML = `<p class="error">✗ Error: ${error.message}</p>`;
+            }
+        }
+
+        async function testKarnataka(district) {
+            const resultDiv = document.getElementById('karnataka-result');
+            const statusSpan = document.getElementById('karnataka-status');
+            resultDiv.innerHTML = `<p class="loading">Testing ${district}...</p>`;
+            
+            try {
+                const response = await fetch(`${API_URL}/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: `Give me business ideas for ${district}` })
+                });
+                
+                const data = await response.json();
+                
+                if (data.response && data.response.includes(district.toUpperCase())) {
+                    statusSpan.className = 'status ok';
+                    statusSpan.textContent = '✓ PASS';
+                    resultDiv.innerHTML = `<p class="success">✓ Karnataka integration working for ${district}!</p>
+<p><strong>Response preview:</strong></p>
+<pre>${data.response.substring(0, 500)}...</pre>`;
+                } else {
+                    throw new Error('Karnataka response not as expected');
+                }
+            } catch (error) {
+                statusSpan.className = 'status fail';
+                statusSpan.textContent = '✗ FAIL';
+                resultDiv.innerHTML = `<p class="error">✗ Error: ${error.message}</p>`;
+            }
+        }
+
+        async function testPrediction() {
+            const resultDiv = document.getElementById('predict-result');
+            const statusSpan = document.getElementById('predict-status');
+            resultDiv.innerHTML = '<p class="loading">Testing prediction...</p>';
+            
+            try {
+                const response = await fetch(`${API_URL}/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        message: 'Predict my profit with sales of $20000, expenses of $10000, marketing spend of $2000'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.response) {
+                    statusSpan.className = 'status ok';
+                    statusSpan.textContent = '✓ PASS';
+                    resultDiv.innerHTML = `<p class="success">✓ Prediction working!</p>
+<p><strong>Response:</strong></p>
+<pre>${data.response.substring(0, 400)}...</pre>`;
+                } else {
+                    throw new Error('No prediction response');
+                }
+            } catch (error) {
+                statusSpan.className = 'status fail';
+                statusSpan.textContent = '✗ FAIL';
+                resultDiv.innerHTML = `<p class="error">✗ Error: ${error.message}</p>`;
+            }
+        }
+
+        async function testStaticFiles() {
+            const resultDiv = document.getElementById('static-result');
+            const statusSpan = document.getElementById('static-status');
+            resultDiv.innerHTML = '<p class="loading">Testing static files...</p>';
+            
+            try {
+                const cssResponse = await fetch(`${API_URL}/static/style.css`);
+                const jsResponse = await fetch(`${API_URL}/static/script.js`);
+                
+                if (cssResponse.ok && jsResponse.ok) {
+                    statusSpan.className = 'status ok';
+                    statusSpan.textContent = '✓ PASS';
+                    resultDiv.innerHTML = `<p class="success">✓ Static files loading correctly!</p>
+<p>✓ CSS: ${cssResponse.status} OK</p>
+<p>✓ JavaScript: ${jsResponse.status} OK</p>`;
+                } else {
+                    throw new Error('Static files not loading');
+                }
+            } catch (error) {
+                statusSpan.className = 'status fail';
+                statusSpan.textContent = '✗ FAIL';
+                resultDiv.innerHTML = `<p class="error">✗ Error: ${error.message}</p>`;
+            }
+        }
+
+        async function runAllTests() {
+            const overallDiv = document.getElementById('overall-status');
+            overallDiv.innerHTML = '<p class="loading">Running all tests...</p>';
+            
+            await testHealth();
+            await new Promise(resolve => setTimeout(resolve, 500));
+            await testMainPage();
+            await new Promise(resolve => setTimeout(resolve, 500));
+            await testKarnataka('Mysuru');
+            await new Promise(resolve => setTimeout(resolve, 500));
+            await testPrediction();
+            await new Promise(resolve => setTimeout(resolve, 500));
+            await testStaticFiles();
+            
+            // Check results
+            const statuses = document.querySelectorAll('.status');
+            let passed = 0;
+            let total = 0;
+            
+            statuses.forEach(status => {
+                if (status.textContent) {
+                    total++;
+                    if (status.classList.contains('ok')) {
+                        passed++;
+                    }
+                }
+            });
+            
+            if (passed === total) {
+                overallDiv.innerHTML = `
+                    <p class="success" style="font-size: 24px;">✓ ALL TESTS PASSED!</p>
+                    <p style="color: #666;">System is fully operational (${passed}/${total} tests passed)</p>
+                    <p style="margin-top: 20px;">
+                        <a href="http://localhost:5000" target="_blank" style="color: #667eea; text-decoration: none; font-weight: bold;">
+                            → Open Application
+                        </a>
+                    </p>
+                `;
+            } else {
+                overallDiv.innerHTML = `
+                    <p class="error" style="font-size: 24px;">✗ SOME TESTS FAILED</p>
+                    <p style="color: #666;">${passed}/${total} tests passed</p>
+                    <p>Please check the failed tests above</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
