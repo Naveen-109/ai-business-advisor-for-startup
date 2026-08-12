@@ -1,0 +1,26 @@
+{
+  "testuser": {
+    "password": "scrypt:32768:8:1$z7cJjEmq92nvYvu7$8ceb6976751722e667498709b2df56a63f1f79db2b80757214361201c1ef9cc9e5ccc4de87ff614fb00662523cf670cd122496d2419ffb6b4aa76dc3755e19c2",
+    "email": "test@example.com",
+    "created_at": "2025-12-08T04:30:20.736925",
+    "chats": [
+      {
+        "message": "Hello",
+        "response": "Hi there",
+        "timestamp": "2025-12-08T05:00:00Z"
+      }
+    ]
+  },
+  "na@1234": {
+    "password": "scrypt:32768:8:1$pn5cd0ooTUdipuBM$fa0b8e8a216e1c857edcd79dcabc0f770079f0c10f7c0f07c3d05f18bddecaea573c1c087e88a2f4eda9d2f3bfc8a521870a718eacaae3c5ad2a04f64d784927",
+    "email": "",
+    "created_at": "2026-01-07T08:35:23.952090",
+    "chats": []
+  },
+  "qw": {
+    "password": "scrypt:32768:8:1$tfN2ssfhyZfEVpNy$58fa05f52eafdbfa7271bb28e99be173792416caa59a8b36c0ff2812c5e0507b8354b66addffde90d05fc57d7f102a4c27ae30e0275a5ad4dbc40a4cb5b4ad3e",
+    "email": "",
+    "created_at": "2026-01-07T08:35:59.081326",
+    "chats": []
+  }
+}

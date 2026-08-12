@@ -1,0 +1,118 @@
+{
+  "agriculture": [
+    {
+      "name": "Organic Farming",
+      "cost": "₹2.5-6.5 L",
+      "revenue": "₹80K-2.5 L/month",
+      "timeline": "6-12 months",
+      "skills": "Farming, organic certification"
+    },
+    {
+      "name": "Dairy Farm",
+      "cost": "₹4-12 L",
+      "revenue": "₹1.2-3.3 L/month",
+      "timeline": "4-8 months",
+      "skills": "Animal husbandry, dairy management"
+    },
+    {
+      "name": "Mushroom Cultivation",
+      "cost": "₹1.5-4 L",
+      "revenue": "₹65K-1.6 L/month",
+      "timeline": "2-4 months",
+      "skills": "Mushroom cultivation, climate control"
+    },
+    {
+      "name": "Sericulture",
+      "cost": "₹2.5-8 L",
+      "revenue": "₹80K-2.5 L/month",
+      "timeline": "6-10 months",
+      "skills": "Silk farming, mulberry cultivation"
+    },
+    {
+      "name": "Poultry Farming",
+      "cost": "₹4-10 L",
+      "revenue": "₹1.2-2.9 L/month",
+      "timeline": "3-6 months",
+      "skills": "Poultry management"
+    },
+    {
+      "name": "Hydroponics",
+      "cost": "₹6.5-16.5 L",
+      "revenue": "₹1.6-4 L/month",
+      "timeline": "4-8 months",
+      "skills": "Hydroponics technology"
+    },
+    {
+      "name": "Spice Cultivation",
+      "cost": "₹4-12 L",
+      "revenue": "₹1.2-3.3 L/month",
+      "timeline": "12-24 months",
+      "skills": "Spice farming, export"
+    },
+    {
+      "name": "Agro-Processing",
+      "cost": "₹8-25 L",
+      "revenue": "₹2.5-6.5 L/month",
+      "timeline": "6-12 months",
+      "skills": "Food processing, licensing"
+    }
+  ],
+  "food": [
+    {
+      "name": "Cloud Kitchen",
+      "cost": "₹4-12 L",
+      "revenue": "₹1.6-5 L/month",
+      "timeline": "2-4 months",
+      "skills": "Cooking, online ordering"
+    },
+    {
+      "name": "Snack Manufacturing",
+      "cost": "₹2.5-8 L",
+      "revenue": "₹80K-2.5 L/month",
+      "timeline": "2-4 months",
+      "skills": "Food prep, FSSAI license"
+    },
+    {
+      "name": "Bakery & Sweets",
+      "cost": "₹6.5-16.5 L",
+      "revenue": "₹1.6-4 L/month",
+      "timeline": "3-6 months",
+      "skills": "Baking, confectionery"
+    },
+    {
+      "name": "Millet Products",
+      "cost": "₹3.3-10 L",
+      "revenue": "₹1-2.9 L/month",
+      "timeline": "3-6 months",
+      "skills": "Food processing, marketing"
+    },
+    {
+      "name": "Catering Service",
+      "cost": "₹2.5-8 L",
+      "revenue": "₹1.2-3.3 L/month",
+      "timeline": "2-3 months",
+      "skills": "Cooking, event management"
+    },
+    {
+      "name": "Pickle Production",
+      "cost": "₹1.6-5 L",
+      "revenue": "₹65K-2 L/month",
+      "timeline": "2-4 months",
+      "skills": "Traditional recipes, packaging"
+    },
+    {
+      "name": "Juice Bar",
+      "cost": "₹4-10 L",
+      "revenue": "₹1.2-2.9 L/month",
+      "timeline": "2-3 months",
+      "skills": "Juice prep, hygiene"
+    },
+    {
+      "name": "Coffee Roasting",
+      "cost": "₹8-20 L",
+      "revenue": "₹2-5 L/month",
+      "timeline": "4-6 months",
+      "skills": "Coffee roasting, barista"
+    }
+  ]
+}
