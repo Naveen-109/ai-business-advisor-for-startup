@@ -1,0 +1,12 @@
+body { font-family: Segoe UI, Tahoma, sans-serif; background: #f4f6fb; margin: 0; padding: 20px; }
+.chat-wrapper { max-width: 800px; margin: 0 auto; background: #fff; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); overflow: hidden; }
+header { padding: 18px 22px; background: linear-gradient(90deg,#667eea,#764ba2); color: white; }
+.subtitle { margin: 4px 0 0; font-size: 0.9rem; opacity: 0.9; }
+main { padding: 16px; }
+.messages { min-height: 300px; max-height: 60vh; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+.bot, .user { padding: 12px 14px; border-radius: 12px; max-width: 85%; }
+.bot { background: #eef2ff; color: #172554; align-self: flex-start; }
+.user { background: #667eea; color: white; align-self: flex-end; }
+.chat-form { display: flex; gap: 8px; margin-top: 12px; }
+#chatInput { flex: 1; padding: 10px 12px; border-radius: 8px; border: 1px solid #dfe7ff; }
+.chat-form button { background: #667eea; color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; }

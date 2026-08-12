@@ -1,0 +1,13 @@
+body{font-family:Segoe UI,Roboto,Arial,sans-serif;background:#f3f6fb;margin:0;padding:40px}
+.login-container{display:flex;align-items:center;justify-content:center;height:calc(100vh - 80px)}
+.card{width:360px;background:#fff;padding:28px;border-radius:10px;box-shadow:0 10px 30px rgba(30,60,120,0.08);text-align:center}
+.card h2{margin:0 0 6px;font-size:1.6rem;color:#333}
+.card .lead{font-size:0.95rem;color:#666;margin-bottom:14px}
+.form-switch{display:flex;margin-bottom:12px;gap:8px}
+.form-switch button{flex:1;padding:8px;border-radius:8px;border:1px solid #e6eefb;background:#f7fbff;cursor:pointer}
+.form-switch button.active{background:linear-gradient(90deg,#667eea,#764ba2);color:white;border-color:transparent}
+form input{width:100%;padding:10px 12px;margin:8px 0;border:1px solid #e6eefb;border-radius:8px}
+button.primary{width:100%;padding:10px;border-radius:8px;border:0;background:linear-gradient(90deg,#667eea,#764ba2);color:white;font-weight:600;cursor:pointer}
+.hidden{display:none}
+.note{margin-top:12px}
+.flash{background:#fff5f5;border:1px solid #ffd6d6;color:#7a1f1f;padding:8px;border-radius:6px;margin-bottom:8px}
