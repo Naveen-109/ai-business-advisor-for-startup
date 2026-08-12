@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Business Advisor - Startup Intelligence Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo-section">
+                    <h1>🤖 AI Business Advisor</h1>
+                    <p class="subtitle">Intelligent Business Intelligence & Profit Prediction Platform</p>
+                </div>
+                <div class="header-right">
+                    <div class="status-indicators">
+                        <span id="mlStatus" class="status-badge">ML Models: Loading...</span>
+                        <span id="llmStatus" class="status-badge">LLM: Checking...</span>
+                    </div>
+                    <div class="user-menu">
+                        {% if session.username %}
+                            <span class="user-info">👤 {{ session.username }}</span>
+                            {% if session.is_admin %}
+                                <a href="{{ url_for('admin_dashboard') }}" class="admin-btn" style="background: #667eea; color: white; padding: 0.5rem 1rem; border-radius: 6px; text-decoration: none; margin-right: 0.5rem;">Admin</a>
+                            {% endif %}
+                            <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+                        {% else %}
+                            <a href="{{ url_for('login') }}" class="login-btn">Login</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Sidebar with Quick Actions -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3>⚡ Quick Actions</h3>
+                    <button class="quick-action-btn" onclick="quickPredict()">
+                        <span class="icon">📊</span>
+                        <span>Quick Predict</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="openMetricsForm()">
+                        <span class="icon">📈</span>
+                        <span>Metrics Input</span>
+                    </button>
+                    <button class="quick-action-btn" onclick="clearChat()">
+                        <span class="icon">🗑️</span>
+                        <span>Clear Chat</span>
+                    </button>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3>💡 Suggestions</h3>
+                    <div class="suggestions-list">
+                        <button class="suggestion-btn" onclick="sendSuggestion('Predict my profit with sales of $25000, expenses of $12000, marketing spend of $2500')">
+                            💰 Profit Forecast
+                        </button>
+                        <button class="suggestion-btn" onclick="sendSuggestion('How can I increase my sales by 40%?')">
+                            📈 Sales Growth
+                        </button>
+                        <button class="suggestion-btn" onclick="sendSuggestion('What strategies reduce my operating costs?')">
+                            💸 Cost Reduction
+                        </button>
+                        <button class="suggestion-btn" onclick="sendSuggestion('What are the best digital marketing channels for startups?')">
+                            📢 Marketing Tips
+                        </button>
+                        <button class="suggestion-btn" onclick="sendSuggestion('How do I compete with larger companies?')">
+                            🎯 Competitive Edge
+                        </button>
+                        <button class="suggestion-btn" onclick="sendSuggestion('What KPIs should I track?')">
+                            📊 Key Metrics
+                        </button>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>🏛️ Karnataka Business Ideas</h3>
+                    <div class="suggestions-list">
+                        <button class="suggestion-btn" onclick="sendSuggestion('Give me business ideas for Bengaluru')">
+                            🏙️ Bengaluru
+                        </button>
+                        <button class="suggestion-btn" onclick="sendSuggestion('Tourism business ideas for Mysuru')">
+                            🏰 Mysuru
+                        </button>
+                        <button class="suggestion-btn" onclick="sendSuggestion('Business opportunities in Mangalore')">
+                            🌊 Mangalore
+                        </button>
+                        <button class="suggestion-btn" onclick="sendSuggestion('Agriculture business ideas for Mandya')">
+                            🌾 Mandya
+                        </button>
+                        <button class="suggestion-btn" onclick="sendSuggestion('Tourism ideas for Kodagu')">
+                            ☕ Kodagu
+                        </button>
+                        <button class="suggestion-btn" onclick="sendSuggestion('Food business ideas in Udupi')">
+                            🍛 Udupi
+                        </button>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>📚 Business Areas</h3>
+                    <div class="business-areas">
+                        <span class="badge">Revenue Growth</span>
+                        <span class="badge">Cost Control</span>
+                        <span class="badge">Marketing ROI</span>
+                        <span class="badge">Team Strategy</span>
+                        <span class="badge">Competitive Analysis</span>
+                        <span class="badge">Cash Flow</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Chatbot Section -->
+            <div class="chatbot-section">
+                <div class="chat-container">
+                    <div id="chatMessages" class="chat-messages">
+                        <div class="message bot-message welcome-message">
+                            <div class="message-content">
+                                <h2>👋 Welcome to AI Business Advisor</h2>
+                                <p>Your intelligent business intelligence and profit prediction companion for startup growth.</p>
+                                
+                                <h3>🎯 What I Can Help You With:</h3>
+                                <ul class="feature-list">
+                                    <li><strong>📊 Profit Predictions</strong> - Using ML models (Linear Regression, Random Forest, LSTM) for accurate forecasting</li>
+                                    <li><strong>🏛️ Karnataka Business Ideas</strong> - Tailored opportunities for all 31 districts with local insights</li>
+                                    <li><strong>💡 Strategic Advice</strong> - Data-driven business strategies and optimization recommendations</li>
+                                    <li><strong>📈 Growth Planning</strong> - Sales expansion, market penetration, and revenue scaling</li>
+                                    <li><strong>💸 Cost Optimization</strong> - Expense reduction and efficiency improvement strategies</li>
+                                    <li><strong>📢 Marketing Strategy</strong> - Channel selection, ROI optimization, customer acquisition</li>
+                                    <li><strong>🎯 Competitive Analysis</strong> - Market positioning and differentiation strategies</li>
+                                    <li><strong>👥 Team Building</strong> - Talent strategy and organizational growth</li>
+                                    <li><strong>💰 Financial Planning</strong> - Profit optimization and cash flow management</li>
+                                </ul>
+
+                                <h3>🚀 Get Started:</h3>
+                                <p>Either use the suggestions below or type your own question:</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-area">
+                        <div class="chat-input-container">
+                            <input type="text" id="chatInput" 
+                                   placeholder="Ask about profit predictions, sales strategies, cost reduction, or any business topic..." 
+                                   autocomplete="off" />
+                            <button id="sendButton" class="btn-send" title="Send message (Enter)">
+                                <span>Send</span>
+                                <span class="icon">➤</span>
+                            </button>
+                        </div>
+                        <div class="input-tips">
+                            <small>💡 Tip: Include specific numbers like 'sales of $20000, expenses of $10000' for more accurate predictions</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Metrics Input Modal -->
+    <div id="metricsModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📊 Enter Your Business Metrics</h2>
+                <button class="close-btn" onclick="closeMetricsForm()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="metricsForm" onsubmit="submitMetrics(event)">
+                    <div class="form-group">
+                        <label for="salesInput">Monthly Sales ($)</label>
+                        <input type="number" id="salesInput" placeholder="20000" min="0" step="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="expensesInput">Monthly Expenses ($)</label>
+                        <input type="number" id="expensesInput" placeholder="10000" min="0" step="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="marketingInput">Marketing Spend ($)</label>
+                        <input type="number" id="marketingInput" placeholder="2000" min="0" step="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="employeesInput">Number of Employees</label>
+                        <input type="number" id="employeesInput" placeholder="20" min="1" step="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="competitionInput">Competition Level (1-5)</label>
+                        <select id="competitionInput">
+                            <option value="1">1 - Low</option>
+                            <option value="2">2 - Low-Medium</option>
+                            <option value="3" selected>3 - Medium</option>
+                            <option value="4">4 - Medium-High</option>
+                            <option value="5">5 - High</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Predict Profit</button>
+                        <button type="button" class="btn-secondary" onclick="closeMetricsForm()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Access Footer -->
+    <footer style="text-align: center; padding: 1rem; margin-top: 2rem; border-top: 1px solid #eee; color: #666; font-size: 0.8rem;">
+        <a href="{{ url_for('admin_login') }}" style="color: #667eea; text-decoration: none;">Admin Access</a>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

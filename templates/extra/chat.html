@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Business Advisor - Extra Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='extra/c.css') }}">
+</head>
+<body>
+    <div class="chat-wrapper">
+        <header>
+            <h1>AI Business Advisor — Extra Chat</h1>
+            <p class="subtitle">Lightweight chat view (uses `/chat` API)</p>
+        </header>
+
+        <main>
+            <div id="messages" class="messages">
+                <div class="bot">Hello — ask about profit predictions, ideas, or growth strategies.</div>
+            </div>
+
+            <form id="chatForm" class="chat-form" onsubmit="return sendMessage(event)">
+                <input id="chatInput" type="text" placeholder="Ask a question..." autocomplete="off">
+                <button type="submit">Send</button>
+            </form>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='extra/ser.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - AI Business Advisor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='extra/login.css') }}">
+    <style>
+        .admin-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+        }
+        .admin-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .admin-header p {
+            margin: 0.5rem 0 0 0;
+            opacity: 0.9;
+        }
+        .card {
+            max-width: 400px;
+            margin: 2rem auto;
+        }
+        .back-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .back-link a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .back-link a:hover {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="card">
+            <div class="admin-header">
+                <h2>🔐 Admin Access</h2>
+                <p>AI Business Advisor Administration</p>
+            </div>
+
+            <div id="messages">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <div class="flash">{{ messages[0] }}</div>
+                    {% endif %}
+                {% endwith %}
+            </div>
+
+            <form method="post">
+                <input name="username" placeholder="Admin Username" required>
+                <input name="password" type="password" placeholder="Admin Password" required>
+                <button type="submit" class="primary">Admin Login</button>
+            </form>
+
+            <div class="back-link">
+                <a href="{{ url_for('index') }}">← Back to Main Site</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

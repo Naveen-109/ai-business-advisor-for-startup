@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details: {{ username }} - Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .admin-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .admin-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .admin-header p {
+            opacity: 0.9;
+        }
+        
+        .admin-nav {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .admin-nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .admin-nav a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .user-info {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .user-info h2 {
+            margin-bottom: 1rem;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .info-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-value {
+            color: #333;
+        }
+        
+        .chat-history {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .chat-history h2 {
+            margin-bottom: 1.5rem;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+        
+        .chat-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #667eea;
+        }
+        
+        .chat-timestamp {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        .chat-message {
+            background: #e3f2fd;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 3px solid #2196f3;
+        }
+        
+        .chat-message-label {
+            font-weight: 600;
+            color: #1976d2;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .chat-message-text {
+            color: #333;
+            white-space: pre-wrap;
+        }
+        
+        .chat-response {
+            background: #f3e5f5;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid #9c27b0;
+        }
+        
+        .chat-response-label {
+            font-weight: 600;
+            color: #7b1fa2;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .chat-response-text {
+            color: #333;
+            white-space: pre-wrap;
+        }
+        
+        .empty-state {
+            text-align: center;
+            color: #666;
+            padding: 3rem;
+            font-style: italic;
+        }
+        
+        .flash {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid #c3e6cb;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: 1rem;
+            }
+            
+            .admin-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chat-item {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <div>
+                <h1>👤 User Details: {{ username }}</h1>
+                <p>Complete chat history and user information</p>
+            </div>
+            <div class="admin-nav">
+                <a href="{{ url_for('admin_dashboard') }}">← Dashboard</a>
+                <a href="{{ url_for('admin_logout') }}">Logout</a>
+            </div>
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash">{{ messages[0] }}</div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- User Information -->
+        <div class="user-info">
+            <h2>📋 User Information</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Username</div>
+                    <div class="info-value">{{ username }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Email</div>
+                    <div class="info-value">{{ user.email or 'Not provided' }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Registration Date</div>
+                    <div class="info-value">{{ user.created_at[:19] if user.created_at else 'Unknown' }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Total Chats</div>
+                    <div class="info-value">{{ user.chats|length if user.chats else 0 }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat History -->
+        <div class="chat-history">
+            <h2>💬 Chat History ({{ user.chats|length if user.chats else 0 }} conversations)</h2>
+            
+            {% if user.chats %}
+                {% for chat in user.chats|reverse %}
+                <div class="chat-item">
+                    <div class="chat-timestamp">
+                        🕒 {{ chat.timestamp if chat.timestamp else 'Unknown time' }}
+                    </div>
+                    
+                    <div class="chat-message">
+                        <div class="chat-message-label">👤 USER MESSAGE:</div>
+                        <div class="chat-message-text">{{ chat.message or 'No message recorded' }}</div>
+                    </div>
+                    
+                    <div class="chat-response">
+                        <div class="chat-response-label">🤖 AI RESPONSE:</div>
+                        <div class="chat-response-text">{{ chat.response or 'No response recorded' }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <p>This user hasn't started any conversations yet.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
